@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/weather_model.dart';
+import '../models/forecast_model.dart';
 
 /// 天气 API 服务类
 /// 负责与 WeatherAPI.com 进行通信
@@ -63,6 +64,68 @@ class WeatherService {
         return WeatherModel.fromJson(data);
       } else {
         throw Exception('获取天气信息失败: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('网络请求失败: $e');
+    }
+  }
+
+  /// 根据城市名称获取7天天气预报
+  ///
+  /// [cityName] 城市名称（支持中文）
+  /// 返回 WeatherForecastResponse 对象，包含7天预报数据
+  Future<WeatherForecastResponse> getForecastByCity(String cityName) async {
+    try {
+      final url = Uri.parse(
+        '$_baseUrl/forecast.json?key=$_apiKey&q=$cityName&days=7&aqi=no',
+      );
+
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return WeatherForecastResponse.fromJson(data);
+      } else if (response.statusCode == 400) {
+        throw Exception('无法找到该城市，请检查城市名称是否正确');
+      } else if (response.statusCode == 401) {
+        throw Exception('API Key 无效，请检查配置');
+      } else if (response.statusCode == 403) {
+        throw Exception('API Key 已超出配额限制');
+      } else {
+        throw Exception('获取天气预报失败: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is Exception) {
+        rethrow;
+      }
+      throw Exception('网络请求失败: $e');
+    }
+  }
+
+  /// 根据经纬度获取7天天气预报
+  ///
+  /// [latitude] 纬度
+  /// [longitude] 经度
+  /// 返回 WeatherForecastResponse 对象，包含7天预报数据
+  Future<WeatherForecastResponse> getForecastByCoordinates(
+    double latitude,
+    double longitude,
+  ) async {
+    try {
+      final url = Uri.parse(
+        '$_baseUrl/forecast.json?key=$_apiKey&q=$latitude,$longitude&days=7&aqi=no',
+      );
+
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return WeatherForecastResponse.fromJson(data);
+      } else {
+        throw Exception('获取天气预报失败: ${response.statusCode}');
       }
     } catch (e) {
       if (e is Exception) {
