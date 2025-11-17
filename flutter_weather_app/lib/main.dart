@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
+import 'providers/theme_provider.dart';
+import 'services/notification_service.dart';
 
-void main() {
-  runApp(const WeatherApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 初始化通知服务
+  await NotificationService().initialize();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const WeatherApp(),
+    ),
+  );
 }
 
 /// 天气应用主入口
@@ -11,15 +24,17 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '天气应用',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'SF Pro Text', // iOS 风格字体
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const HomeScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          title: '天气应用',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeProvider.themeMode,
+          theme: ThemeProvider.getLightTheme(),
+          darkTheme: ThemeProvider.getDarkTheme(),
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }
