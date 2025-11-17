@@ -125,7 +125,7 @@ class NotificationService {
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,
-      color: Colors.red,
+      color: Color(0xFFF44336),
     );
 
     const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
