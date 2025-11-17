@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// 通知服务类
@@ -117,7 +118,7 @@ class NotificationService {
     required String cityName,
     required String warning,
   }) async {
-    const AndroidNotificationDetails androidDetails =
+    final AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
       'weather_warning_channel',
       '天气警告',
@@ -125,7 +126,7 @@ class NotificationService {
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,
-      color: Colors.red,
+      color: Color(0xFFFF0000),
     );
 
     const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
@@ -134,7 +135,7 @@ class NotificationService {
       presentSound: true,
     );
 
-    const NotificationDetails details = NotificationDetails(
+    final NotificationDetails details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
     );

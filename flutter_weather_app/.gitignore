@@ -60,7 +60,6 @@ ios/ServiceDefinitions.json
 ios/Runner/GeneratedPluginRegistrant.*
 
 # Web
-lib/generated_plugin_registrant.dart
 
 # Exceptions
 !**/ios/**/default.mode1v3
