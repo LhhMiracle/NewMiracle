@@ -1,0 +1,36 @@
+name: flutter_weather_app
+description: 一个跨平台的天气应用，使用 Flutter 和 Dart 开发
+
+# 应用版本和构建号
+version: 1.0.0+1
+
+# Flutter SDK 版本要求
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+
+# 依赖包
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP 请求库，用于 API 调用
+  http: ^1.1.0
+
+  # Cupertino 图标（iOS 风格）
+  cupertino_icons: ^1.0.2
+
+# 开发依赖
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Lint 规则
+  flutter_lints: ^2.0.0
+
+# Flutter 配置
+flutter:
+  uses-material-design: true
+
+  # 如果需要添加图片资源，取消注释：
+  # assets:
+  #   - assets/images/
