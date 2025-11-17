@@ -8,7 +8,7 @@ import '../models/forecast_model.dart';
 class WeatherService {
   // 请替换为你自己的 API Key
   // 可以在 https://www.weatherapi.com/ 免费注册获取
-  static const String _apiKey = 'YOUR_API_KEY_HERE';
+  static const String _apiKey = 'd035f687e2e1407c83954957251711';
   static const String _baseUrl = 'https://api.weatherapi.com/v1';
 
   /// 根据城市名称获取天气信息
